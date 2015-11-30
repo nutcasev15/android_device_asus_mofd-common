@@ -6287,185 +6287,57 @@ int radio::requestShutdownResponse(int slotId,
 
 void responseRadioCapability(RadioResponseInfo& responseInfo, int serial,
         int responseType, RIL_Errno e, void *response, size_t responseLen, RadioCapability& rc) {
-    populateResponseInfo(responseInfo, serial, responseType, e);
-
-    if (response == NULL || responseLen != sizeof(RIL_RadioCapability)) {
-        RLOGE("responseRadioCapability: Invalid response");
-        if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
-        rc.logicalModemUuid = hidl_string();
-    } else {
-        convertRilRadioCapabilityToHal(response, responseLen, rc);
-    }
+    // Dummy Function
 }
 
 int radio::getRadioCapabilityResponse(int slotId,
                                      int responseType, int serial, RIL_Errno e,
                                      void *response, size_t responseLen) {
-#if VDBG
-    RLOGD("getRadioCapabilityResponse: serial %d", serial);
-#endif
-
-    if (radioService[slotId]->mRadioResponse != NULL) {
-        RadioResponseInfo responseInfo = {};
-        RadioCapability result = {};
-        responseRadioCapability(responseInfo, serial, responseType, e, response, responseLen,
-                result);
-        Return<void> retStatus = radioService[slotId]->mRadioResponse->getRadioCapabilityResponse(
-                responseInfo, result);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("getRadioCapabilityResponse: radioService[%d]->mRadioResponse == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 int radio::setRadioCapabilityResponse(int slotId,
                                      int responseType, int serial, RIL_Errno e,
                                      void *response, size_t responseLen) {
-#if VDBG
-    RLOGD("setRadioCapabilityResponse: serial %d", serial);
-#endif
-
-    if (radioService[slotId]->mRadioResponse != NULL) {
-        RadioResponseInfo responseInfo = {};
-        RadioCapability result = {};
-        responseRadioCapability(responseInfo, serial, responseType, e, response, responseLen,
-                result);
-        Return<void> retStatus = radioService[slotId]->mRadioResponse->setRadioCapabilityResponse(
-                responseInfo, result);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("setRadioCapabilityResponse: radioService[%d]->mRadioResponse == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 LceStatusInfo responseLceStatusInfo(RadioResponseInfo& responseInfo, int serial, int responseType,
                                     RIL_Errno e, void *response, size_t responseLen) {
-    populateResponseInfo(responseInfo, serial, responseType, e);
     LceStatusInfo result = {};
 
-    if (response == NULL || responseLen != sizeof(RIL_LceStatusInfo)) {
-        RLOGE("Invalid response: NULL");
-        if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
-    } else {
-        RIL_LceStatusInfo *resp = (RIL_LceStatusInfo *) response;
-        result.lceStatus = (LceStatus) resp->lce_status;
-        result.actualIntervalMs = (uint8_t) resp->actual_interval_ms;
-    }
+    // Dummy Function
     return result;
 }
 
 int radio::startLceServiceResponse(int slotId,
                                    int responseType, int serial, RIL_Errno e,
                                    void *response, size_t responseLen) {
-#if VDBG
-    RLOGD("startLceServiceResponse: serial %d", serial);
-#endif
-
-    if (radioService[slotId]->mRadioResponse != NULL) {
-        RadioResponseInfo responseInfo = {};
-        LceStatusInfo result = responseLceStatusInfo(responseInfo, serial, responseType, e,
-                response, responseLen);
-
-        Return<void> retStatus
-                = radioService[slotId]->mRadioResponse->startLceServiceResponse(responseInfo,
-                result);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("startLceServiceResponse: radioService[%d]->mRadioResponse == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 int radio::stopLceServiceResponse(int slotId,
                                   int responseType, int serial, RIL_Errno e,
                                   void *response, size_t responseLen) {
-#if VDBG
-    RLOGD("stopLceServiceResponse: serial %d", serial);
-#endif
-
-    if (radioService[slotId]->mRadioResponse != NULL) {
-        RadioResponseInfo responseInfo = {};
-        LceStatusInfo result = responseLceStatusInfo(responseInfo, serial, responseType, e,
-                response, responseLen);
-
-        Return<void> retStatus
-                = radioService[slotId]->mRadioResponse->stopLceServiceResponse(responseInfo,
-                result);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("stopLceServiceResponse: radioService[%d]->mRadioResponse == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 int radio::pullLceDataResponse(int slotId,
                                int responseType, int serial, RIL_Errno e,
                                void *response, size_t responseLen) {
-#if VDBG
-    RLOGD("pullLceDataResponse: serial %d", serial);
-#endif
 
-    if (radioService[slotId]->mRadioResponse != NULL) {
-        RadioResponseInfo responseInfo = {};
-        populateResponseInfo(responseInfo, serial, responseType, e);
-
-        LceDataInfo result = {};
-        if (response == NULL || responseLen != sizeof(RIL_LceDataInfo)) {
-            RLOGE("pullLceDataResponse: Invalid response");
-            if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
-        } else {
-            convertRilLceDataInfoToHal(response, responseLen, result);
-        }
-
-        Return<void> retStatus = radioService[slotId]->mRadioResponse->pullLceDataResponse(
-                responseInfo, result);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("pullLceDataResponse: radioService[%d]->mRadioResponse == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 int radio::getModemActivityInfoResponse(int slotId,
                                         int responseType, int serial, RIL_Errno e,
                                         void *response, size_t responseLen) {
-#if VDBG
-    RLOGD("getModemActivityInfoResponse: serial %d", serial);
-#endif
-
-    if (radioService[slotId]->mRadioResponse != NULL) {
-        RadioResponseInfo responseInfo = {};
-        populateResponseInfo(responseInfo, serial, responseType, e);
-        ActivityStatsInfo info;
-        if (response == NULL || responseLen != sizeof(RIL_ActivityStatsInfo)) {
-            RLOGE("getModemActivityInfoResponse Invalid response: NULL");
-            if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
-        } else {
-            RIL_ActivityStatsInfo *resp = (RIL_ActivityStatsInfo *)response;
-            info.sleepModeTimeMs = resp->sleep_mode_time_ms;
-            info.idleModeTimeMs = resp->idle_mode_time_ms;
-            for(int i = 0; i < RIL_NUM_TX_POWER_LEVELS; i++) {
-                info.txmModetimeMs[i] = resp->tx_mode_time_ms[i];
-            }
-            info.rxModeTimeMs = resp->rx_mode_time_ms;
-        }
-
-        Return<void> retStatus
-                = radioService[slotId]->mRadioResponse->getModemActivityInfoResponse(responseInfo,
-                info);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("getModemActivityInfoResponse: radioService[%d]->mRadioResponse == NULL",
-                slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
@@ -8254,37 +8126,13 @@ int radio::hardwareConfigChangedInd(int slotId,
 }
 
 void convertRilRadioCapabilityToHal(void *response, size_t responseLen, RadioCapability& rc) {
-    RIL_RadioCapability *rilRadioCapability = (RIL_RadioCapability *) response;
-    rc.session = rilRadioCapability->session;
-    rc.phase = (V1_0::RadioCapabilityPhase) rilRadioCapability->phase;
-    rc.raf = rilRadioCapability->rat;
-    rc.logicalModemUuid = convertCharPtrToHidlString(rilRadioCapability->logicalModemUuid);
-    rc.status = (V1_0::RadioCapabilityStatus) rilRadioCapability->status;
+    // Dummy Function
 }
 
 int radio::radioCapabilityIndicationInd(int slotId,
                                         int indicationType, int token, RIL_Errno e, void *response,
                                         size_t responseLen) {
-    if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
-        if (response == NULL || responseLen != sizeof(RIL_RadioCapability)) {
-            RLOGE("radioCapabilityIndicationInd: invalid response");
-            return 0;
-        }
-
-        RadioCapability rc = {};
-        convertRilRadioCapabilityToHal(response, responseLen, rc);
-
-#if VDBG
-        RLOGD("radioCapabilityIndicationInd");
-#endif
-        Return<void> retStatus = radioService[slotId]->mRadioIndication->radioCapabilityIndication(
-                convertIntToRadioIndicationType(indicationType), rc);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("radioCapabilityIndicationInd: radioService[%d]->mRadioIndication == NULL",
-                slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
@@ -8304,134 +8152,26 @@ bool isServiceTypeCfQuery(RIL_SsServiceType serType, RIL_SsRequestType reqType) 
 int radio::onSupplementaryServiceIndicationInd(int slotId,
                                                int indicationType, int token, RIL_Errno e,
                                                void *response, size_t responseLen) {
-    if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
-        if (response == NULL || responseLen != sizeof(RIL_StkCcUnsolSsResponse)) {
-            RLOGE("onSupplementaryServiceIndicationInd: invalid response");
-            return 0;
-        }
-
-        RIL_StkCcUnsolSsResponse *rilSsResponse = (RIL_StkCcUnsolSsResponse *) response;
-        StkCcUnsolSsResult ss = {};
-        ss.serviceType = (SsServiceType) rilSsResponse->serviceType;
-        ss.requestType = (SsRequestType) rilSsResponse->requestType;
-        ss.teleserviceType = (SsTeleserviceType) rilSsResponse->teleserviceType;
-        ss.serviceClass = rilSsResponse->serviceClass;
-        ss.result = (RadioError) rilSsResponse->result;
-
-        if (isServiceTypeCfQuery(rilSsResponse->serviceType, rilSsResponse->requestType)) {
-#if VDBG
-            RLOGD("onSupplementaryServiceIndicationInd CF type, num of Cf elements %d",
-                    rilSsResponse->cfData.numValidIndexes);
-#endif
-            if (rilSsResponse->cfData.numValidIndexes > NUM_SERVICE_CLASSES) {
-                RLOGE("onSupplementaryServiceIndicationInd numValidIndexes is greater than "
-                        "max value %d, truncating it to max value", NUM_SERVICE_CLASSES);
-                rilSsResponse->cfData.numValidIndexes = NUM_SERVICE_CLASSES;
-            }
-
-            ss.cfData.resize(1);
-            ss.ssInfo.resize(0);
-
-            /* number of call info's */
-            ss.cfData[0].cfInfo.resize(rilSsResponse->cfData.numValidIndexes);
-
-            for (int i = 0; i < rilSsResponse->cfData.numValidIndexes; i++) {
-                 RIL_CallForwardInfo cf = rilSsResponse->cfData.cfInfo[i];
-                 CallForwardInfo *cfInfo = &ss.cfData[0].cfInfo[i];
-
-                 cfInfo->status = (CallForwardInfoStatus) cf.status;
-                 cfInfo->reason = cf.reason;
-                 cfInfo->serviceClass = cf.serviceClass;
-                 cfInfo->toa = cf.toa;
-                 cfInfo->number = convertCharPtrToHidlString(cf.number);
-                 cfInfo->timeSeconds = cf.timeSeconds;
-#if VDBG
-                 RLOGD("onSupplementaryServiceIndicationInd: "
-                        "Data: %d,reason=%d,cls=%d,toa=%d,num=%s,tout=%d],", cf.status,
-                        cf.reason, cf.serviceClass, cf.toa, (char*)cf.number, cf.timeSeconds);
-#endif
-            }
-        } else {
-            ss.ssInfo.resize(1);
-            ss.cfData.resize(0);
-
-            /* each int */
-            ss.ssInfo[0].ssInfo.resize(SS_INFO_MAX);
-            for (int i = 0; i < SS_INFO_MAX; i++) {
-#if VDBG
-                 RLOGD("onSupplementaryServiceIndicationInd: Data: %d",
-                        rilSsResponse->ssInfo[i]);
-#endif
-                 ss.ssInfo[0].ssInfo[i] = rilSsResponse->ssInfo[i];
-            }
-        }
-
-#if VDBG
-        RLOGD("onSupplementaryServiceIndicationInd");
-#endif
-        Return<void> retStatus = radioService[slotId]->mRadioIndication->
-                onSupplementaryServiceIndication(convertIntToRadioIndicationType(indicationType),
-                ss);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("onSupplementaryServiceIndicationInd: "
-                "radioService[%d]->mRadioIndication == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 int radio::stkCallControlAlphaNotifyInd(int slotId,
                                         int indicationType, int token, RIL_Errno e, void *response,
                                         size_t responseLen) {
-    if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
-        if (response == NULL || responseLen == 0) {
-            RLOGE("stkCallControlAlphaNotifyInd: invalid response");
-            return 0;
-        }
-#if VDBG
-        RLOGD("stkCallControlAlphaNotifyInd");
-#endif
-        Return<void> retStatus = radioService[slotId]->mRadioIndication->stkCallControlAlphaNotify(
-                convertIntToRadioIndicationType(indicationType),
-                convertCharPtrToHidlString((char *) response));
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("stkCallControlAlphaNotifyInd: radioService[%d]->mRadioIndication == NULL",
-                slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
 void convertRilLceDataInfoToHal(void *response, size_t responseLen, LceDataInfo& lce) {
-    RIL_LceDataInfo *rilLceDataInfo = (RIL_LceDataInfo *)response;
-    lce.lastHopCapacityKbps = rilLceDataInfo->last_hop_capacity_kbps;
-    lce.confidenceLevel = rilLceDataInfo->confidence_level;
-    lce.lceSuspended = rilLceDataInfo->lce_suspended;
+    // Dummy Function
 }
 
 int radio::lceDataInd(int slotId,
                       int indicationType, int token, RIL_Errno e, void *response,
                       size_t responseLen) {
-    if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
-        if (response == NULL || responseLen != sizeof(RIL_LceDataInfo)) {
-            RLOGE("lceDataInd: invalid response");
-            return 0;
-        }
 
-        LceDataInfo lce = {};
-        convertRilLceDataInfoToHal(response, responseLen, lce);
-#if VDBG
-        RLOGD("lceDataInd");
-#endif
-        Return<void> retStatus = radioService[slotId]->mRadioIndication->lceData(
-                convertIntToRadioIndicationType(indicationType), lce);
-        radioService[slotId]->checkReturnStatus(retStatus);
-    } else {
-        RLOGE("lceDataInd: radioService[%d]->mRadioIndication == NULL", slotId);
-    }
-
+    // Dummy Function
     return 0;
 }
 
