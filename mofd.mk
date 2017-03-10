@@ -92,7 +92,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 PRODUCT_PACKAGES += \
     Snap \
     FlipFlap \
-    masquerade \
+    ThemeInterfacer \
     su
 
 # GPS
