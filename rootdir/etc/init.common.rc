@@ -16,6 +16,7 @@ on early-init
 
 on init
     mkdir /mnt/shell 0700 shell shell
+    mkdir /data/system/theme 0755 system system
 
     # set usb serial number
     write /sys/class/android_usb/android0/iSerial ${ro.serialno}
