@@ -188,6 +188,7 @@ ifeq ($(RECOVERY_VARIANT),twrp)
 TARGET_RECOVERY_FSTAB := device/asus/mofd-common/recovery/twrp.fstab
 BOARD_HAS_NO_REAL_SDCARD := true
 TW_THEME := portrait_hdpi
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 RECOVERY_SDCARD_ON_DATA := true
 TW_DEFAULT_BRIGHTNESS := "160"
 TW_INCLUDE_CRYPTO := true
