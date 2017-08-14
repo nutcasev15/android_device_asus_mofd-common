@@ -45,9 +45,9 @@ public class SensorsDozeService extends Service {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
     private static final int HANDWAVE_DELTA_NS = 1000 * 1000 * 1000;
-    private static final int PULSE_MIN_INTERVAL_MS = 5000;
-    private static final int SENSORS_WAKELOCK_DURATION = 1000;
-    private static final int VIBRATOR_ACKNOWLEDGE = 40;
+    private static final int PULSE_MIN_INTERVAL_MS = 150000;
+    private static final int SENSORS_WAKELOCK_DURATION = 850;
+    private static final int VIBRATOR_ACKNOWLEDGE = 30;
 
     private static final String KEY_GESTURE_HAND_WAVE = "gesture_hand_wave";
     private static final String KEY_GESTURE_PICK_UP = "gesture_pick_up";
