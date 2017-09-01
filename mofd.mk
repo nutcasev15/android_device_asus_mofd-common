@@ -92,8 +92,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 PRODUCT_PACKAGES += \
     Snap \
     FlipFlap \
-    ThemeInterfacer \
-    su
+    ThemeInterfacer
 
 # GPS
 PRODUCT_COPY_FILES += \
