@@ -45,8 +45,11 @@ public class SensorsDozeService extends Service {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
     private static final int HANDWAVE_DELTA_NS = 1000 * 1000 * 1000;
-    private static final int PULSE_MIN_INTERVAL_MS = 150000;
-    private static final int SENSORS_WAKELOCK_DURATION = 850;
+    private static final int PULSE_MIN_INTERVAL_MS_FLOOR = 5 * 60 * 1000;
+    private static final int PULSE_MIN_INTERVAL_MS_PICKUP = 3 * 60 * 1000;
+    private static final int PULSE_MIN_INTERVAL_MS_GROWTH_FACTOR = 2;
+    private static final int PULSE_MIN_INTERVAL_MS_CEILING = 40 * 60 * 1000;
+    private static final int SENSORS_WAKELOCK_DURATION = 800;
     private static final int VIBRATOR_ACKNOWLEDGE = 30;
 
     private static final String KEY_GESTURE_HAND_WAVE = "gesture_hand_wave";
@@ -71,6 +74,7 @@ public class SensorsDozeService extends Service {
     private boolean mProximityNear;
     private long mLastPulseTimestamp;
     private long mLastStowedTimestamp;
+    private int PULSE_MIN_INTERVAL_MS = PULSE_MIN_INTERVAL_MS_FLOOR;
 
     private OrientationSensor.OrientationListener mOrientationListener =
             new OrientationSensor.OrientationListener() {
@@ -287,8 +291,23 @@ public class SensorsDozeService extends Service {
         resetValues();
     }
 
+    private void calculateDozePulseInterval() {
+        boolean device_idle = mPowerManager.isDeviceIdleMode();
+        PULSE_MIN_INTERVAL_MS *= PULSE_MIN_INTERVAL_MS_GROWTH_FACTOR;
+        if (!device_idle) {
+            PULSE_MIN_INTERVAL_MS = PULSE_MIN_INTERVAL_MS_PICKUP;
+        } else if (PULSE_MIN_INTERVAL_MS == PULSE_MIN_INTERVAL_MS_PICKUP) {
+            PULSE_MIN_INTERVAL_MS = PULSE_MIN_INTERVAL_MS_FLOOR;
+        } else if (PULSE_MIN_INTERVAL_MS > PULSE_MIN_INTERVAL_MS_CEILING) {
+            PULSE_MIN_INTERVAL_MS = PULSE_MIN_INTERVAL_MS_CEILING;
+        }
+    }
+
     private void launchDozePulse() {
         long delta;
+
+        calculateDozePulseInterval();
+
         if (mLastPulseTimestamp != 0) {
             delta = SystemClock.elapsedRealtime() - mLastPulseTimestamp;
         } else {
@@ -386,6 +405,7 @@ public class SensorsDozeService extends Service {
         setOrientationSensor(false, true);
         setPickUpSensor(false, true);
         setProximitySensor(false, true);
+        PULSE_MIN_INTERVAL_MS = PULSE_MIN_INTERVAL_MS_FLOOR;
     }
 
     private void onDisplayOff() {
@@ -399,6 +419,7 @@ public class SensorsDozeService extends Service {
             setPickUpSensor(false, true);
             setProximitySensor(true, true);
         }
+        PULSE_MIN_INTERVAL_MS = PULSE_MIN_INTERVAL_MS_FLOOR;
     }
 
     private void loadPreferences(SharedPreferences sharedPreferences) {
