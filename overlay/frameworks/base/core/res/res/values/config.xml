@@ -165,24 +165,29 @@
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
         <item>50</item>
-        <item>100</item>
         <item>200</item>
         <item>300</item>
         <item>400</item>
+        <item>450</item>
         <item>500</item>
+        <item>550</item>
+        <item>600</item>
         <item>650</item>
-        <item>800</item>
-        <item>1000</item>
-        <item>1500</item>
+        <item>700</item>
+        <item>950</item>
+        <item>1450</item>
         <item>2000</item>
+        <item>2500</item>
         <item>3000</item>
-        <item>4000</item>
-        <item>5000</item>
+        <item>3500</item>
+        <item>4500</item>
         <item>7000</item>
-        <item>10000</item>
-        <item>12500</item>
+        <item>8500</item>
+        <item>9500</item>
+        <item>11000</item>
+        <item>13000</item>
         <item>15000</item>
-        <item>17500</item>
+        <item>17000</item>
         <item>20000</item>
     </integer-array>
 
@@ -192,27 +197,32 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>5</item>
-        <item>21</item>
-        <item>32</item>
-        <item>42</item>
-        <item>47</item>
-        <item>52</item>
-        <item>56</item>
-        <item>61</item>
-        <item>65</item>
-        <item>70</item>
-        <item>91</item>
-        <item>105</item>
-        <item>116</item>
-        <item>122</item>
-        <item>124</item>
-        <item>126</item>
-        <item>160</item>
-        <item>161</item>
-        <item>191</item>
-        <item>223</item>
-        <item>255</item>
+        <item>5</item> <!-- < 50 -->
+        <item>21</item> <!-- < 200 -->
+        <item>32</item> <!-- < 300 -->
+        <item>42</item> <!-- < 400 -->
+        <item>47</item> <!-- < 450 -->
+        <item>52</item> <!-- < 500 -->
+        <item>56</item> <!-- < 550 -->
+        <item>61</item> <!-- < 600 -->
+        <item>65</item> <!-- < 650 -->
+        <item>70</item> <!-- < 700 -->
+        <item>78</item> <!-- < 950 -->
+        <item>84</item> <!-- < 1450 -->
+        <item>91</item> <!-- < 2000 -->
+        <item>98</item> <!-- < 2500 -->
+        <item>105</item> <!-- < 3000 -->
+        <item>112</item> <!-- < 3500 -->
+        <item>120</item> <!-- < 4500 -->
+        <item>130</item> <!-- < 7000 -->
+        <item>138</item> <!-- < 8500 -->
+        <item>146</item> <!-- < 9500 -->
+        <item>152</item> <!-- < 11000 -->
+        <item>188</item> <!-- < 13000 -->
+        <item>204</item> <!-- < 15000 -->
+        <item>220</item> <!-- < 17000 -->
+        <item>232</item> <!-- < 20000 -->
+        <item>255</item> <!-- > 20000 -->
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -221,27 +231,34 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
-        <item>50</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
+        <item>0</item> <!-- < 50 -->
+        <item>0</item> <!-- < 200 -->
+        <item>0</item> <!-- < 300 -->
+        <item>0</item> <!-- < 400 -->
+        <item>0</item> <!-- < 450 -->
+        <item>0</item> <!-- < 500 -->
+        <item>0</item> <!-- < 550 -->
+        <item>0</item> <!-- < 600 -->
+        <item>0</item> <!-- < 650 -->
+        <item>0</item> <!-- < 700 -->
+        <item>0</item> <!-- < 1200 -->
+        <item>0</item> <!-- < 1700 -->
+        <item>0</item> <!-- < 2000 -->
+        <item>0</item> <!-- < 2500 -->
+        <item>0</item> <!-- < 3000 -->
+        <item>0</item> <!-- < 4000 -->
+        <item>0</item> <!-- < 5000 -->
+        <item>0</item> <!-- < 6000 -->
+        <item>0</item> <!-- < 8500 -->
+        <item>0</item> <!-- < 10000 -->
+        <item>0</item> <!-- < 12000 -->
+        <item>0</item> <!-- < 14000 -->
+        <item>0</item> <!-- < 16000 -->
+        <item>0</item> <!-- < 18000 -->
+        <item>0</item> <!-- < 21000 -->
+        <item>0</item> <!-- < 24000 -->
+        <item>0</item> <!-- < 30000 -->
+        <item>0</item> <!-- > 30000 -->
     </integer-array>
 
     <!-- Array of output values for keyboard backlight corresponding to the LUX values
@@ -250,27 +267,34 @@
          The brightness values must be between 0 and 255 and be non-decreasing.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
-        <item>50</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
+        <item>0</item> <!-- < 50 -->
+        <item>0</item> <!-- < 200 -->
+        <item>0</item> <!-- < 300 -->
+        <item>0</item> <!-- < 400 -->
+        <item>0</item> <!-- < 450 -->
+        <item>0</item> <!-- < 500 -->
+        <item>0</item> <!-- < 550 -->
+        <item>0</item> <!-- < 600 -->
+        <item>0</item> <!-- < 650 -->
+        <item>0</item> <!-- < 700 -->
+        <item>0</item> <!-- < 1200 -->
+        <item>0</item> <!-- < 1700 -->
+        <item>0</item> <!-- < 2000 -->
+        <item>0</item> <!-- < 2500 -->
+        <item>0</item> <!-- < 3000 -->
+        <item>0</item> <!-- < 4000 -->
+        <item>0</item> <!-- < 5000 -->
+        <item>0</item> <!-- < 6000 -->
+        <item>0</item> <!-- < 8500 -->
+        <item>0</item> <!-- < 10000 -->
+        <item>0</item> <!-- < 12000 -->
+        <item>0</item> <!-- < 14000 -->
+        <item>0</item> <!-- < 16000 -->
+        <item>0</item> <!-- < 18000 -->
+        <item>0</item> <!-- < 21000 -->
+        <item>0</item> <!-- < 24000 -->
+        <item>0</item> <!-- < 30000 -->
+        <item>0</item> <!-- > 30000 -->
     </integer-array>
 
     <!-- Default color for notification LED. -->
