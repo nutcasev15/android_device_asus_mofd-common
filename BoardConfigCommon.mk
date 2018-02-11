@@ -65,8 +65,10 @@ WITH_CM_CHARGER := false
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 # Dex-preoptimization: Speeds up initial boot (Default AOSP Behaviour)
-ifeq ($(HOST_OS),linux)
-    WITH_DEXPREOPT := true
+ifneq ($(THERE_BE_NUTS),)
+    ifeq ($(HOST_OS),linux)
+        WITH_DEXPREOPT := true
+    endif
 endif
 
 # Hardware

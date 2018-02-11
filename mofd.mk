@@ -91,8 +91,11 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 # Apps
 PRODUCT_PACKAGES += \
     Snap \
-    FlipFlap \
-    ThemeInterfacer
+    FlipFlap
+
+ifneq ($(THERE_BE_NUTS),)
+    PRODUCT_PACKAGES += ThemeInterfacer
+endif
 
 # GPS
 PRODUCT_COPY_FILES += \

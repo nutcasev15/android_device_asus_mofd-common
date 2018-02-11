@@ -1,21 +1,31 @@
-#All Nutty Optimizations
+# All Nutty Optimizations
 
-# OMS Verified
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.substratum.verified=true
+ifneq ($(THERE_BE_NUTS),)
+    # OMS Verified
+    PRODUCT_PROPERTY_OVERRIDES += \
+        ro.substratum.verified=true
+endif
 
 # Toolchain Flags
 SILVERMONT_FLAGS := -march=slm \
                     -mtune=slm \
                     -msse4.2 \
                     -mpopcnt \
-                    -fgcse-las \
-                    -mstackrealign
+                    -mstackrealign \
+                    -funsafe-math-optimizations
 
-BOARD_GLOBAL_CFLAGS += $(SILVERMONT_FLAGS) -Ofast -funsafe-math-optimizations
-BOARD_GLOBAL_CPPFLAGS := $(SILVERMONT_FLAGS) -Ofast -funsafe-math-optimizations
-BOARD_RELEASE_CFLAGS := $(SILVERMONT_FLAGS) -Ofast -funsafe-math-optimizations
-CLANG_CONFIG_EXTRA_CFLAGS += $(SILVERMONT_FLAGS) -O3 -funsafe-math-optimizations
-CLANG_CONFIG_EXTRA_CONLYFLAGS += $(SILVERMONT_FLAGS) -O3 -funsafe-math-optimizations
-CLANG_CONFIG_EXTRA_CPPFLAGS += $(SILVERMONT_FLAGS) -O3 -funsafe-math-optimizations
+ifneq ($(THERE_BE_NUTS),)
+    SILVERMONT_FLAGS += \
+        -fgcse-las \
+        -Ofast
+else
+    SILVERMONT_FLAGS += \
+        -O3
+endif
 
+BOARD_GLOBAL_CFLAGS += $(SILVERMONT_FLAGS)
+BOARD_GLOBAL_CPPFLAGS := $(SILVERMONT_FLAGS)
+BOARD_RELEASE_CFLAGS := $(SILVERMONT_FLAGS)
+CLANG_CONFIG_EXTRA_CFLAGS += $(SILVERMONT_FLAGS)
+CLANG_CONFIG_EXTRA_CONLYFLAGS += $(SILVERMONT_FLAGS)
+CLANG_CONFIG_EXTRA_CPPFLAGS += $(SILVERMONT_FLAGS)
