@@ -112,7 +112,7 @@ on boot
     write /proc/sys/vm/dirty_ratio 5
     write /proc/sys/vm/dirty_background_ratio 2
     write /proc/sys/vm/dirty_expire_centisecs 600
-    write /proc/sys/vm/dirty_writeback_centisecs 1200
+    write /proc/sys/vm/dirty_writeback_centisecs 120
 
 # Set debugfs ownership to media
    chown media media /sys/kernel/debug/sst/fw_ssp_reg
