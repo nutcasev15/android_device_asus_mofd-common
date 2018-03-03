@@ -64,13 +64,9 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 WITH_CM_CHARGER := false
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
-# Dex-preoptimization: Speeds up initial boot (if we ever o a user build, which we don't)
+# Dex-preoptimization: Speeds up initial boot (Default AOSP Behaviour)
 ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),user)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
-  endif
+    WITH_DEXPREOPT := true
 endif
 
 # Hardware
