@@ -52,6 +52,9 @@ on boot
     #enable kernel compaction
     write /proc/sys/vm/compact_memory 1
 
+    # Limit Background Apps
+    setprop ro.sys.fw.bg_apps 25
+
 on fs
     mkdir /factory 0775 system system
     mkdir /config 0775 system system
