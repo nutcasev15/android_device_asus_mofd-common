@@ -52,8 +52,10 @@ on boot
     #enable kernel compaction
     write /proc/sys/vm/compact_memory 1
 
-    # Limit Background Apps
+    # Limit Background Apps && Caching Stuff
     setprop ro.sys.fw.bg_apps 25
+    setprop ro.sys.fw.use_trim_settings "true"
+    setprop ro.sys.fw.trim_enable_memory 8589934592
 
 on fs
     mkdir /factory 0775 system system
