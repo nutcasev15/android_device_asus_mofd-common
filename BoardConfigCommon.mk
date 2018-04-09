@@ -69,7 +69,7 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/asus/mofd-common/cmhw
+BOARD_HARDWARE_CLASS := device/asus/mofd-common/lineagehw
 
 # Healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.moorefield

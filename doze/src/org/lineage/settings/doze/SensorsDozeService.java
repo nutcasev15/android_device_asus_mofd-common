@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2015 The CyanogenMod Project
- * Copyright (c) 2017 The LineageOS Project
+ * Copyright (C) 2017 The CyanogenMod Project
+ *               2018 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.cyanogenmod.settings.doze;
+package org.lineage.settings.doze;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -35,7 +35,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
-import cyanogenmod.providers.CMSettings;
+import lineageos.providers.LineageSettings;
 
 public class SensorsDozeService extends Service {
 
@@ -316,8 +316,8 @@ public class SensorsDozeService extends Service {
                 Context.AUDIO_SERVICE);
         Vibrator vibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
-        boolean enabled = CMSettings.System.getInt(mContext.getContentResolver(),
-                CMSettings.System.TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, 1) != 0;
+        boolean enabled = LineageSettings.System.getInt(mContext.getContentResolver(),
+                LineageSettings.System.TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, 1) != 0;
 
         switch (audioManager.getRingerMode()) {
             case AudioManager.RINGER_MODE_SILENT:
