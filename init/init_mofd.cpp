@@ -22,7 +22,7 @@
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
-#include "log.h"
+#include "android-base/logging.h"
 #include "property_service.h"
 #include "util.h"
 #include "vendor_init.h"
@@ -80,6 +80,8 @@ char const *intel_prop[] = {
 "sys.watchdog.previous.counter",
 "sys.kernel.version"
 };
+
+using android::init::property_set;
 
 static int read_file2(const char *fname, char *data, int max_size)
 {
@@ -155,7 +157,7 @@ static void intel_props() {
 
 }
 
-void set_feq_values()
+void set_freq_values()
 {
     char buf[BUF_SIZE];
 
@@ -179,5 +181,5 @@ void vendor_load_properties()
     get_serial();
     configure_zram();
     intel_props();
-    set_feq_values();
+    set_freq_values();
 }
