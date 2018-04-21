@@ -11,7 +11,6 @@ SILVERMONT_FLAGS := -march=slm \
                     -mtune=slm \
                     -msse4.2 \
                     -mpopcnt \
-                    -mstackrealign \
                     -funsafe-math-optimizations
 
 ifneq ($(THERE_BE_NUTS),)
