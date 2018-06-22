@@ -65,3 +65,17 @@ LOCAL_MODULE := libshim_sensors
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
+
+# tcs
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+     icu53.c \
+     icu55.c
+
+LOCAL_SHARED_LIBRARIES := libicuuc libicui18n
+LOCAL_MODULE := libshim_tcs
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_SHARED_LIBRARY)
