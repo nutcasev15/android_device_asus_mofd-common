@@ -272,7 +272,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libshim_icu \
     libshim_gpsd \
-    libshim_sensors
+    libshim_sensors \
+    libshim_tcs
 
 # Thermal itux
 ENABLE_ITUXD := true
