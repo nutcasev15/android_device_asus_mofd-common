@@ -162,12 +162,14 @@ service mmgr /system/bin/mmgr -i 1
     socket mmgr stream 660 system radio
     user system
     group radio cache inet misc system usb
+    onrestart restart ril-daemon
 
 service mmgr2 /system/bin/mmgr -i 2
     class late_start
     socket mmgr2 stream 660 system radio
     user system
     group radio cache inet misc system usb
+    onrestart restart ril-daemon1
 
 # adding nvm manager
 service nvmmanager /system/bin/nvm_server
