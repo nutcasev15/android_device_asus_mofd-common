@@ -295,11 +295,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libpvr2d
 
-# libdrm
+# DRM
 PRODUCT_PACKAGES += \
     libdrm \
     dristat \
-    drmstat
+    drmstat \
+    android.hardware.drm@1.0-impl
 
 # Permissions
 PRODUCT_COPY_FILES += \
