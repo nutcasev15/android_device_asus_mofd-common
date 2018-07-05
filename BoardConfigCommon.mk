@@ -196,6 +196,15 @@ BUILD_WITH_CHAABI_SUPPORT := true
 # SELinux
 BOARD_SEPOLICY_DIRS += device/asus/mofd-common/sepolicy
 
+# Shims
+TARGET_LD_SHIM_LIBS := \
+    /system/lib/libicuuc.so|libshim_icu.so \
+    /system/lib/hw/camera.vendor.mofd_v1.so|libshim_camera.so \
+    /system/bin/gpsd|libshim_gpsd.so \
+    /system/lib/sensors.vendor.mofd_v1.so|libshim_sensors.so \
+    /system/lib/libcamera_client.so|libshim_camera_parameters.so \
+    /system/lib/libtcs.so|libshim_tcs.so
+
 # Tap-to-Wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
 
