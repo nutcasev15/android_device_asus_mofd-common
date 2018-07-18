@@ -160,7 +160,7 @@ void set_freq_values()
     char buf[BUF_SIZE];
 
     if(read_file2(MAX_CPU_FREQ, buf, sizeof(buf))) {
-        property_set("ro.sys.perf.device.powersave", "500000");
+        property_set("ro.sys.perf.device.powersave", "1250000");
         property_set("ro.sys.perf.device.touchboost", "1500000");
         if ( strncmp(buf, LOW_CPU, strlen(LOW_CPU)) == 0 ) {
             property_set("ro.sys.perf.device.full", "1833000");
