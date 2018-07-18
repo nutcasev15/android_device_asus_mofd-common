@@ -1,4 +1,6 @@
 AudioComms.                             u:object_r:audio_prop:s0
+ro.audio.offload.supported              u:object_r:asus_prop:s0
+audio.offload.disable                   u:object_r:asus_prop:s0
 config.CID                              u:object_r:asus_prop:s0
 config.idcode                           u:object_r:asus_prop:s0
 config.packingcode                      u:object_r:asus_prop:s0
