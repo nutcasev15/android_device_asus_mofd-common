@@ -12,12 +12,13 @@ on property:sys.boot_completed=1
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor ondemand
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor ondemand
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 27000
-    write /sys/devices/system/cpu/cpufreq/ondemand/powersave_bias 5
-    write /sys/devices/system/cpu/cpufreq/ondemand/ignore_nice_load 1
+    write /sys/devices/system/cpu/cpufreq/ondemand/powersave_bias 0
+    write /sys/devices/system/cpu/cpufreq/ondemand/ignore_nice_load 0
     setprop sys.perf.profile.governor ondemand
 
 # Ril Power Tweaks ( Mostly )
 on boot
+	setprop wifi.supplicant_scan_interval 180
 	setprop ro.ril.power_collapse 1
 	setprop ro.ril.disable.power.collapse 0
 	setprop pm.sleep_mode 1

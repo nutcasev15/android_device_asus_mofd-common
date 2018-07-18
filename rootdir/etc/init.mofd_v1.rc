@@ -236,7 +236,7 @@ on post-fs
     chown system system /proc/smb1357_qc_disable
 
 #For Disable Charging control
-	chown system system /proc/smb1357_disable_chrg
+    chown system system /proc/smb1357_disable_chrg
 
 # For Audio headset ringtone volume index when ringer mode is vibrate
     setprop ro.audio.vibra.ring.vol.idx 5
