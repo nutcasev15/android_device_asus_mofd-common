@@ -109,10 +109,13 @@ on boot
     setprop video.playback.slow-motion 1
 
 #  Configure Virtual Memory Parameters
-    write /proc/sys/vm/dirty_ratio 5
-    write /proc/sys/vm/dirty_background_ratio 2
-    write /proc/sys/vm/dirty_expire_centisecs 600
-    write /proc/sys/vm/dirty_writeback_centisecs 120
+    write /proc/sys/vm/dirty_ratio 7
+    write /proc/sys/vm/dirty_background_ratio 3
+    write /proc/sys/vm/dirty_expire_centisecs 700
+    write /proc/sys/vm/dirty_writeback_centisecs 140
+    write /proc/sys/vm/overcommit_memory 0
+    write /proc/sys/vm/extra_free_kbytes 32768
+    write /proc/sys/vm/swappiness 1
 
 # Set debugfs ownership to media
    chown media media /sys/kernel/debug/sst/fw_ssp_reg
