@@ -6749,37 +6749,47 @@ int radio::networkStateChangedInd(int slotId,
     return 0;
 }
 
-uint8_t hexCharToInt(uint8_t c) {
-    if (c >= '0' && c <= '9') return (c - '0');
-    if (c >= 'A' && c <= 'F') return (c - 'A' + 10);
-    if (c >= 'a' && c <= 'f') return (c - 'a' + 10);
+uint8_t hexCharToInt(char c) {
+    RLOGD("character is %c %d",c,c);
+    if (c >= '0' && c <= '9') return (uint8_t)(c - '0');
+    if (c >= 'A' && c <= 'F') return (uint8_t)(c - 'A' + 10);
+    if (c >= 'a' && c <= 'f') return (uint8_t)(c - 'a' + 10);
 
     return INVALID_HEX_CHAR;
 }
 
 uint8_t * convertHexStringToBytes(void *response, size_t responseLen) {
-    if (responseLen % 2 != 0) {
+    //FIXME For odd response length we shall append a 0 to make it even instead of telling invalid response. This SHOULD NOT affect the original message.
+    /*if (responseLen % 2 != 0) {
         return NULL;
-    }
+    }*/
 
-    uint8_t *bytes = (uint8_t *)calloc(responseLen/2, sizeof(uint8_t));
+    uint8_t *bytes = (uint8_t *)calloc((responseLen+((responseLen % 2 == 0)?0:1))/2, sizeof(uint8_t));
     if (bytes == NULL) {
         RLOGE("convertHexStringToBytes: cannot allocate memory for bytes string");
         return NULL;
     }
-    uint8_t *hexString = (uint8_t *)response;
+    char *hexString = (char *)response;
 
-    for (size_t i = 0; i < responseLen; i += 2) {
+    //For diagnostic purpose
+    RLOGD("***\nconvertHexToStringBytes: first 5 characters of response: %c %c %c %c %c",hexString[0],hexString[1],hexString[2],hexString[3],hexString[4]);
+
+    for (size_t i = 0; i < ((responseLen % 2) ? (responseLen-2):(responseLen)); i += 2) {
         uint8_t hexChar1 = hexCharToInt(hexString[i]);
         uint8_t hexChar2 = hexCharToInt(hexString[i + 1]);
 
         if (hexChar1 == INVALID_HEX_CHAR || hexChar2 == INVALID_HEX_CHAR) {
-            RLOGE("convertHexStringToBytes: invalid hex char %d %d",
-                    hexString[i], hexString[i + 1]);
+            RLOGE("convertHexStringToBytes: invalid hex char %d %d at i=%d",
+                    hexString[i], hexString[i + 1],i);
             free(bytes);
             return NULL;
         }
         bytes[i/2] = ((hexChar1 << 4) | hexChar2);
+    }
+
+    // Append a 0 for odd length response
+    if(responseLen % 2){
+       bytes[(responseLen-1)/2] = ( (hexCharToInt(hexString[responseLen-1]) << 4) | 0 );
     }
 
     return bytes;
