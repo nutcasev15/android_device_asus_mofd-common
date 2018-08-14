@@ -3474,6 +3474,11 @@ int radio::getSignalStrengthResponse(int slotId,
     RLOGD("getSignalStrengthResponse: serial %d", serial);
 #endif
 
+
+    // Debug Logging
+    RLOGD("***\ngetSignalStrengthResponse: slotid=%d responseType=%d serial=%d responseLen=%d\n***\n",slotId,responseType,serial,responseLen);
+    // End
+
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
@@ -3793,6 +3798,10 @@ int radio::getVoiceRegistrationStateResponse(int slotId,
     RLOGD("getVoiceRegistrationStateResponse: serial %d", serial);
 #endif
 
+	// Debug Logging
+    RLOGD("***\ngetVoiceRegistrationStateResponse: slotid=%d responseType=%d serial=%d responseLen=%d\n***",slotId,responseType,serial,responseLen);
+    // End
+
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
@@ -3817,6 +3826,9 @@ int radio::getVoiceRegistrationStateResponse(int slotId,
                 voiceRegResponse.reasonForDenial = ATOI_NULL_HANDLED_DEF(resp[13], 0);
                 fillCellIdentityFromVoiceRegStateResponseString(voiceRegResponse.cellIdentity,
                         numStrings, resp);
+
+                //Print diagnostic message
+                RLOGD("***\nregState=%d rat=%d cssSupported=%d roamingIndicator=%d systemIsInPrl=%d defaultRoamingIndicator=%d reasonForDenial=%d", voiceRegResponse.regState,voiceRegResponse.rat,voiceRegResponse.cssSupported,voiceRegResponse.roamingIndicator,voiceRegResponse.systemIsInPrl,voiceRegResponse.defaultRoamingIndicator,voiceRegResponse.reasonForDenial);
             }
         } else {
             RIL_VoiceRegistrationStateResponse *voiceRegState =
@@ -3857,6 +3869,10 @@ int radio::getDataRegistrationStateResponse(int slotId,
     RLOGD("getDataRegistrationStateResponse: serial %d", serial);
 #endif
 
+    // Debug Logging
+    RLOGD("#####\n#####\n#####\ngetDataRegistrationStateResponse: slotid=%d responseType=%d serial=%d responseLen=%d\n#####\n#####\n#####",slotId,responseType,serial,responseLen);
+    // End
+
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
@@ -3891,6 +3907,10 @@ int radio::getDataRegistrationStateResponse(int slotId,
                 dataRegResponse.reasonDataDenied = dataRegState->reasonDataDenied;
                 dataRegResponse.maxDataCalls = dataRegState->maxDataCalls;
                 fillCellIdentityResponse(dataRegResponse.cellIdentity, dataRegState->cellIdentity);
+
+                //Print diagnostic message
+                RLOGD("***\nregState=%d rat=%d reasonDataDenied=%d maxDataCalls=%d",dataRegResponse.regState,dataRegResponse.rat,dataRegResponse.reasonDataDenied,dataRegResponse.maxDataCalls);
+
             }
         }
 
@@ -6994,6 +7014,10 @@ void convertRilSignalStrengthToHal(void *response, size_t responseLen,
 int radio::currentSignalStrengthInd(int slotId,
                                     int indicationType, int token, RIL_Errno e,
                                     void *response, size_t responseLen) {
+    // Debug Logging
+    RLOGD("***\ncurrentSignalStrengthInd: slotid=%d indicationType=%d token=%d responseLen=%d\n***",slotId,indicationType,token,responseLen);
+    // End
+
     if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
         if (response == NULL || (responseLen != sizeof(RIL_SignalStrength_v10)
                 && responseLen != sizeof(RIL_SignalStrength_v8))) {
