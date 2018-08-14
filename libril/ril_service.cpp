@@ -16,6 +16,7 @@
 
 #define LOG_TAG "RILC"
 
+
 #include <android/hardware/radio/1.1/IRadio.h>
 #include <android/hardware/radio/1.1/IRadioResponse.h>
 #include <android/hardware/radio/1.1/IRadioIndication.h>
@@ -3458,13 +3459,24 @@ int radio::getSignalStrengthResponse(int slotId,
     RLOGD("getSignalStrengthResponse: serial %d", serial);
 #endif
 
+
+	//custom
+    RLOGD("#####\n#####\n#####\ngetSignalStrengthResponse: slotid=%d responseType=%d serial=%d responseLen=%d\n#####\n#####\n#####",slotId,responseType,serial,responseLen);
+    /*RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("getSignalStrengthResponse: slotid=%d responseType=%d serial=%d responseLen=%d",slotId,responseType,serial,responseLen);    
+    RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("#####");*/
+    //custom end
+
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
         SignalStrength signalStrength = {};
         if (response == NULL || (responseLen != sizeof(RIL_SignalStrength_v10)
-                && responseLen != sizeof(RIL_SignalStrength_v8))) {
-            RLOGE("getSignalStrengthResponse: Invalid response");
+                && responseLen != sizeof(RIL_SignalStrength_v8) && responseLen != sizeof(RIL_SignalStrength_v6))) {
+            RLOGE("getSignalStrengthResponse: Invalid response.\n (response == NULL) is %d\nresponseLen=%d\nsizeof(RIL_SignalStrength_v10) is %zu\nsizeof(RIL_SignalStrength_v8) is %zu",response==NULL,responseLen,sizeof(RIL_SignalStrength_v10),sizeof(RIL_SignalStrength_v8));
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else {
             convertRilSignalStrengthToHal(response, responseLen, signalStrength);
@@ -3777,6 +3789,16 @@ int radio::getVoiceRegistrationStateResponse(int slotId,
     RLOGD("getVoiceRegistrationStateResponse: serial %d", serial);
 #endif
 
+	//custom
+    RLOGD("#####\n#####\n#####\ngetVoiceRegistrationStateResponse: slotid=%d responseType=%d serial=%d responseLen=%d\n#####\n#####\n#####",slotId,responseType,serial,responseLen);
+    /*RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("getVoiceRegistrationStateResponse: slotid=%d responseType=%d serial=%d responseLen=%d",slotId,responseType,serial,responseLen);    
+    RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("#####");*/
+    //custom end
+
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
@@ -3787,8 +3809,11 @@ int radio::getVoiceRegistrationStateResponse(int slotId,
                RLOGE("getVoiceRegistrationStateResponse Invalid response: NULL");
                if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else if (s_vendorFunctions->version <= 14) {
-            if (numStrings != 15) {
-                RLOGE("getVoiceRegistrationStateResponse Invalid response: NULL");
+            //Check version
+            RLOGD("s_vendorFunctions->version is %d",s_vendorFunctions->version);
+            //FIXME Was 15 only, but included 16 for diagnostic purposes
+            if ((numStrings != 15) && (numStrings !=16)) {
+                RLOGE("getVoiceRegistrationStateResponse Invalid response: NULL \n numStrings=%d",numStrings);
                 if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
             } else {
                 char **resp = (char **) response;
@@ -3801,6 +3826,9 @@ int radio::getVoiceRegistrationStateResponse(int slotId,
                 voiceRegResponse.reasonForDenial = ATOI_NULL_HANDLED_DEF(resp[13], 0);
                 fillCellIdentityFromVoiceRegStateResponseString(voiceRegResponse.cellIdentity,
                         numStrings, resp);
+                        
+                //Print diagnostic message
+                RLOGD("regState=%d rat=%d cssSupported=%d roamingIndicator=%d systemIsInPrl=%d defaultRoamingIndicator=%d reasonForDenial=%d", voiceRegResponse.regState,voiceRegResponse.rat,voiceRegResponse.cssSupported,voiceRegResponse.roamingIndicator,voiceRegResponse.systemIsInPrl,voiceRegResponse.defaultRoamingIndicator,voiceRegResponse.reasonForDenial);
             }
         } else {
             RIL_VoiceRegistrationStateResponse *voiceRegState =
@@ -3841,6 +3869,16 @@ int radio::getDataRegistrationStateResponse(int slotId,
     RLOGD("getDataRegistrationStateResponse: serial %d", serial);
 #endif
 
+    //custom
+    RLOGD("#####\n#####\n#####\ngetDataRegistrationStateResponse: slotid=%d responseType=%d serial=%d responseLen=%d\n#####\n#####\n#####",slotId,responseType,serial,responseLen);
+    /*RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("getDataRegistrationStateResponse: slotid=%d responseType=%d serial=%d responseLen=%d",slotId,responseType,serial,responseLen);    
+    RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("#####");*/
+    //custom end
+
     if (radioService[slotId]->mRadioResponse != NULL) {
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
@@ -3850,7 +3888,8 @@ int radio::getDataRegistrationStateResponse(int slotId,
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else if (s_vendorFunctions->version <= 14) {
             int numStrings = responseLen / sizeof(char *);
-            if ((numStrings != 6) && (numStrings != 11)) {
+            //FIXME Added 7 also to see if it works. Will have to test if all data is placed properly.
+            if ((numStrings != 6) && (numStrings != 11) && (numStrings !=7)) {
                 RLOGE("getDataRegistrationStateResponse Invalid response: NULL");
                 if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
             } else {
@@ -3875,6 +3914,10 @@ int radio::getDataRegistrationStateResponse(int slotId,
                 dataRegResponse.reasonDataDenied = dataRegState->reasonDataDenied;
                 dataRegResponse.maxDataCalls = dataRegState->maxDataCalls;
                 fillCellIdentityResponse(dataRegResponse.cellIdentity, dataRegState->cellIdentity);
+                
+                //Print diagnostic message
+                RLOGD("regState=%d rat=%d reasonDataDenied=%d maxDataCalls=%d",dataRegResponse.regState,dataRegResponse.rat,dataRegResponse.reasonDataDenied,dataRegResponse.maxDataCalls);
+       
             }
         }
 
@@ -6657,37 +6700,50 @@ int radio::networkStateChangedInd(int slotId,
     return 0;
 }
 
-uint8_t hexCharToInt(uint8_t c) {
-    if (c >= '0' && c <= '9') return (c - '0');
-    if (c >= 'A' && c <= 'F') return (c - 'A' + 10);
-    if (c >= 'a' && c <= 'f') return (c - 'a' + 10);
+uint8_t hexCharToInt(char c) {
+    RLOGD("character is %c %d",c,c);
+    if (c >= '0' && c <= '9') return (uint8_t)(c - '0');
+    if (c >= 'A' && c <= 'F') return (uint8_t)(c - 'A' + 10);
+    if (c >= 'a' && c <= 'f') return (uint8_t)(c - 'a' + 10);
 
     return INVALID_HEX_CHAR;
 }
 
 uint8_t * convertHexStringToBytes(void *response, size_t responseLen) {
-    if (responseLen % 2 != 0) {
+    //FIXME For odd response length we shall append a 0 to make it even instead of telling invalid response. This SHOULD NOT affect the original message.
+    /*if (responseLen % 2 != 0) {
         return NULL;
-    }
-
-    uint8_t *bytes = (uint8_t *)calloc(responseLen/2, sizeof(uint8_t));
+    }*/
+    
+    
+ 
+    uint8_t *bytes = (uint8_t *)calloc((responseLen+((responseLen % 2 == 0)?0:1))/2, sizeof(uint8_t));
     if (bytes == NULL) {
         RLOGE("convertHexStringToBytes: cannot allocate memory for bytes string");
         return NULL;
     }
-    uint8_t *hexString = (uint8_t *)response;
+    char *hexString = (char *)response;
+    
+    //For diagnostic purpose
+    RLOGD("convertHexToStringBytes: first 5 characters of response: %c %c %c %c %c",hexString[0],hexString[1],hexString[2],hexString[3],hexString[4]);
+    
 
-    for (size_t i = 0; i < responseLen; i += 2) {
+    for (size_t i = 0; i < ((responseLen % 2) ? (responseLen-2):(responseLen)); i += 2) {
         uint8_t hexChar1 = hexCharToInt(hexString[i]);
         uint8_t hexChar2 = hexCharToInt(hexString[i + 1]);
 
         if (hexChar1 == INVALID_HEX_CHAR || hexChar2 == INVALID_HEX_CHAR) {
-            RLOGE("convertHexStringToBytes: invalid hex char %d %d",
-                    hexString[i], hexString[i + 1]);
+            RLOGE("convertHexStringToBytes: invalid hex char %d %d at i=%d",
+                    hexString[i], hexString[i + 1],i);
             free(bytes);
             return NULL;
         }
         bytes[i/2] = ((hexChar1 << 4) | hexChar2);
+    }
+    
+    //Append a 0 for odd length response
+    if(responseLen % 2){
+       bytes[(responseLen-1)/2] = ( (hexCharToInt(hexString[responseLen-1]) << 4) | 0 );
     }
 
     return bytes;
@@ -6824,6 +6880,51 @@ int radio::nitzTimeReceivedInd(int slotId,
     return 0;
 }
 
+//Z00A modem is giving V6 Signal. Data structure not tested properly.
+void convertRilSignalStrengthToHalV6(void *response, size_t responseLen,
+        SignalStrength& signalStrength) {
+    RIL_SignalStrength_v6 *rilSignalStrength = (RIL_SignalStrength_v6 *) response;
+
+    // Fixup LTE for backwards compatibility
+    // signalStrength: -1 -> 99
+    if (rilSignalStrength->LTE_SignalStrength.signalStrength == -1) {
+        rilSignalStrength->LTE_SignalStrength.signalStrength = 99;
+    }
+    // rsrp: -1 -> INT_MAX all other negative value to positive.
+    // So remap here
+    if (rilSignalStrength->LTE_SignalStrength.rsrp == -1) {
+        rilSignalStrength->LTE_SignalStrength.rsrp = INT_MAX;
+    } else if (rilSignalStrength->LTE_SignalStrength.rsrp < -1) {
+        rilSignalStrength->LTE_SignalStrength.rsrp = -rilSignalStrength->LTE_SignalStrength.rsrp;
+    }
+    // rsrq: -1 -> INT_MAX
+    if (rilSignalStrength->LTE_SignalStrength.rsrq == -1) {
+        rilSignalStrength->LTE_SignalStrength.rsrq = INT_MAX;
+    }
+    // Not remapping rssnr is already using INT_MAX
+    // cqi: -1 -> INT_MAX
+    if (rilSignalStrength->LTE_SignalStrength.cqi == -1) {
+        rilSignalStrength->LTE_SignalStrength.cqi = INT_MAX;
+    }
+
+    signalStrength.gw.signalStrength = rilSignalStrength->GW_SignalStrength.signalStrength;
+    signalStrength.gw.bitErrorRate = rilSignalStrength->GW_SignalStrength.bitErrorRate;
+    signalStrength.cdma.dbm = rilSignalStrength->CDMA_SignalStrength.dbm;
+    signalStrength.cdma.ecio = rilSignalStrength->CDMA_SignalStrength.ecio;
+    signalStrength.evdo.dbm = rilSignalStrength->EVDO_SignalStrength.dbm;
+    signalStrength.evdo.ecio = rilSignalStrength->EVDO_SignalStrength.ecio;
+    signalStrength.evdo.signalNoiseRatio =
+            rilSignalStrength->EVDO_SignalStrength.signalNoiseRatio;
+    signalStrength.lte.signalStrength = rilSignalStrength->LTE_SignalStrength.signalStrength;
+    signalStrength.lte.rsrp = rilSignalStrength->LTE_SignalStrength.rsrp;
+    signalStrength.lte.rsrq = rilSignalStrength->LTE_SignalStrength.rsrq;
+    signalStrength.lte.rssnr = rilSignalStrength->LTE_SignalStrength.rssnr;
+    signalStrength.lte.cqi = rilSignalStrength->LTE_SignalStrength.cqi;
+    //FIXME No timing advance in v6, so no idea what to put here. Falling back to INT_MAX.
+    signalStrength.lte.timingAdvance = INT_MAX;
+    signalStrength.tdScdma.rscp = INT_MAX;
+}
+
 void convertRilSignalStrengthToHalV8(void *response, size_t responseLen,
         SignalStrength& signalStrength) {
     RIL_SignalStrength_v8 *rilSignalStrength = (RIL_SignalStrength_v8 *) response;
@@ -6914,6 +7015,8 @@ void convertRilSignalStrengthToHal(void *response, size_t responseLen,
         SignalStrength& signalStrength) {
     if (responseLen == sizeof(RIL_SignalStrength_v8)) {
         convertRilSignalStrengthToHalV8(response, responseLen, signalStrength);
+    } else if(responseLen == sizeof(RIL_SignalStrength_v6)) {
+        convertRilSignalStrengthToHalV6(response, responseLen, signalStrength);
     } else {
         convertRilSignalStrengthToHalV10(response, responseLen, signalStrength);
     }
@@ -6922,10 +7025,21 @@ void convertRilSignalStrengthToHal(void *response, size_t responseLen,
 int radio::currentSignalStrengthInd(int slotId,
                                     int indicationType, int token, RIL_Errno e,
                                     void *response, size_t responseLen) {
+    //custom
+    RLOGD("#####\n#####\n#####\ncurrentSignalStrengthInd: slotid=%d indicationType=%d token=%d responseLen=%d\n#####\n#####\n#####",slotId,indicationType,token,responseLen);
+    /*RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("currentSignalStrengthInd: slotid=%d indicationType=%d token=%d responseLen=%d",slotId,indicationType,token,responseLen);    
+    RLOGD("#####");
+    RLOGD("#####");
+    RLOGD("#####");*/
+    //custom end                            
+    
+    
     if (radioService[slotId] != NULL && radioService[slotId]->mRadioIndication != NULL) {
         if (response == NULL || (responseLen != sizeof(RIL_SignalStrength_v10)
-                && responseLen != sizeof(RIL_SignalStrength_v8))) {
-            RLOGE("currentSignalStrengthInd: invalid response");
+                && responseLen != sizeof(RIL_SignalStrength_v8) && responseLen != sizeof(RIL_SignalStrength_v6))) {
+            RLOGE("currentSignalStrengthInd: invalid response \n (response == NULL) is %d\nresponseLen=%d\nsizeof(RIL_SignalStrength_v10) is %zu\nsizeof(RIL_SignalStrength_v8) is %zu",response==NULL,responseLen,sizeof(RIL_SignalStrength_v10),sizeof(RIL_SignalStrength_v8));
             return 0;
         }
 
