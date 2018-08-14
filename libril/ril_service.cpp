@@ -3812,8 +3812,11 @@ int radio::getVoiceRegistrationStateResponse(int slotId,
                RLOGE("getVoiceRegistrationStateResponse Invalid response: NULL");
                if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else if (s_vendorFunctions->version <= 14) {
-            if (numStrings != 15) {
-                RLOGE("getVoiceRegistrationStateResponse Invalid response: NULL");
+            //Check version
+            RLOGD("s_vendorFunctions->version is %d",s_vendorFunctions->version);
+            //FIXME Was 15 only, but included 16 for diagnostic purposes
+            if ((numStrings != 15) && (numStrings !=16)) {
+                RLOGE("getVoiceRegistrationStateResponse Invalid response: NULL \n numStrings=%d",numStrings);
                 if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
             } else {
                 char **resp = (char **) response;
@@ -3882,7 +3885,8 @@ int radio::getDataRegistrationStateResponse(int slotId,
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else if (s_vendorFunctions->version <= 14) {
             int numStrings = responseLen / sizeof(char *);
-            if ((numStrings != 6) && (numStrings != 11)) {
+            //FIXME Added 7 also to see if it works. Will have to test if all data is placed properly.
+            if ((numStrings != 6) && (numStrings != 11) && (numStrings !=7)) {
                 RLOGE("getDataRegistrationStateResponse Invalid response: NULL");
                 if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
             } else {
