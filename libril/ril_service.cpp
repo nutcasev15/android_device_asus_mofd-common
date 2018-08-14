@@ -4573,6 +4573,21 @@ int convertOperatorStatusToInt(const char *str) {
     }
 }
 
+const char * combineOperatorNameAndRAT(const char * name, const char * rat){
+    size_t l1 = strlen(name);
+    size_t l2 = strlen(rat);
+    
+    char * res = (char *) malloc((l1+l2+4)*sizeof(char *));
+    for(size_t i = 0; i<l1; i++)res[i] = name[i];
+    res[l1] = ' ';
+    res[l1+1] = '(';
+    for(size_t i = 0; i<l2; i++)res[l1+2+i] = rat[i];
+    res[l1+2+l2]=')';
+    res[l1+2+l2+1]= '\0';
+    
+    return res;
+}
+
 int radio::getAvailableNetworksResponse(int slotId,
                               int responseType, int serial, RIL_Errno e, void *response,
                               size_t responseLen) {
@@ -4584,16 +4599,19 @@ int radio::getAvailableNetworksResponse(int slotId,
         RadioResponseInfo responseInfo = {};
         populateResponseInfo(responseInfo, serial, responseType, e);
         hidl_vec<OperatorInfo> networks;
+        
+        //Z00A modem returns 5 fields instead of four. 
         if ((response == NULL && responseLen != 0)
-                || responseLen % (4 * sizeof(char *))!= 0) {
+                || responseLen % (5 * sizeof(char *))!= 0) {
             RLOGE("getAvailableNetworksResponse Invalid response: NULL");
+            
             if (e == RIL_E_SUCCESS) responseInfo.error = RadioError::INVALID_RESPONSE;
         } else {
             char **resp = (char **) response;
             int numStrings = responseLen / sizeof(char *);
-            networks.resize(numStrings/4);
-            for (int i = 0, j = 0; i < numStrings; i = i + 4, j++) {
-                networks[j].alphaLong = convertCharPtrToHidlString(resp[i]);
+            networks.resize(numStrings/5);
+            for (int i = 0, j = 0; i < numStrings; i = i + 5, j++) {
+                networks[j].alphaLong = convertCharPtrToHidlString(combineOperatorNameAndRAT(resp[i],resp[i+4]));
                 networks[j].alphaShort = convertCharPtrToHidlString(resp[i + 1]);
                 networks[j].operatorNumeric = convertCharPtrToHidlString(resp[i + 2]);
                 int status = convertOperatorStatusToInt(resp[i + 3]);
