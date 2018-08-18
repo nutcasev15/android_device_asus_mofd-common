@@ -204,6 +204,9 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib/libcamera_client.so|libshim_camera_parameters.so \
     /system/lib/libtcs.so|libshim_tcs.so
 
+# Vendor Interface Manifest
+DEVICE_MANIFEST_FILE := device/asus/mofd-common/manifest.xml
+
 # Tap-to-Wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
 
