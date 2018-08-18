@@ -206,6 +206,7 @@ TARGET_LD_SHIM_LIBS := \
 
 # Vendor Interface Manifest
 DEVICE_MANIFEST_FILE := device/asus/mofd-common/manifest.xml
+DEVICE_MATRIX_FILE := device/asus/mofd-common/compatibility_matrix.xml
 
 # Tap-to-Wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
