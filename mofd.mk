@@ -167,7 +167,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/media/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
-    device/asus/mofd-common/media/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles.xml \
+    device/asus/mofd-common/media/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
     device/asus/mofd-common/media/mfx_omxil_core.conf:$(TARGET_COPY_OUT_VENDOR)/etc/mfx_omxil_core.conf \
     device/asus/mofd-common/media/video_isv_profile.xml:$(TARGET_COPY_OUT_VENDOR)/etc/video_isv_profile.xml \
     device/asus/mofd-common/media/wrs_omxil_components.list:$(TARGET_COPY_OUT_VENDOR)/etc/wrs_omxil_components.list \
