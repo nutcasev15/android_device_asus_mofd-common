@@ -45,17 +45,30 @@ on boot
     write /proc/sys/net/core/rmem_max 16777216
     write /proc/sys/net/core/wmem_max 16777216
     write /proc/sys/net/core/optmem_max 262144
+    write /sys/power/pm_freeze_timeout 1850
 
-    #Set freezing timeout value as 2000ms
-    write /sys/power/pm_freeze_timeout 2000
+# Buildprop Tweaks
 
-    #enable kernel compaction
-    write /proc/sys/vm/compact_memory 1
+    setprop wifi.supplicant_scan_interval 240
+    setprop ro.ril.power_collapse 1
+    setprop pm.sleep_mode 1
+
+# Virtual Memory Tweaks
+
+    write /proc/sys/vm/dirty_ratio 10
+    write /proc/sys/vm/dirty_background_ratio 5
+    write /proc/sys/vm/overcommit_memory 0
+    write /proc/sys/vm/extra_free_kbytes 32768
+    write /proc/sys/vm/swappiness 0
 
     # Limit Background Apps && Caching Stuff
-    setprop ro.sys.fw.bg_apps 25
+    setprop ro.sys.fw.bg_apps 20
     setprop ro.sys.fw.use_trim_settings "true"
     setprop ro.sys.fw.trim_enable_memory 8589934592
+
+on property:sys.boot_completed=1
+    # enable kernel compaction
+    write /proc/sys/vm/compact_memory 1
 
 on fs
     mkdir /factory 0775 system system
@@ -154,7 +167,7 @@ on post-fs-data
 
     chown system system /sys/class/optical_sensors/proximity/ps_adc
     chmod 0664 /sys/class/optical_sensors/proximity/ps_adc
-	
+
     chown system system /sys/class/optical_sensors/lightsensor/ls_adc
     chmod 0664 /sys/class/optical_sensors/lightsensor/ls_adc
 

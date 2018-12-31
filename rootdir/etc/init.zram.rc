@@ -9,6 +9,7 @@ on property:ro.config.zram=true
     # Configure UKSM
     write /sys/kernel/mm/uksm/run 1
     write /sys/kernel/mm/uksm/cpu_governor "quiet"
-    # Configure ZRAM
+    write /sys/kernel/mm/uksm/sleep_millisecs 1000
+    # Configure ZRAM Further
     write /sys/devices/virtual/block/zram0/max_comp_streams 1
     write /sys/devices/virtual/block/zram0/disksize 536870912
