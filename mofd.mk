@@ -287,6 +287,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     hwcomposer.moorefield
 
+# HWC Debug Properties
+PRODUCT_PROPERTY_OVERRIDES += \
+	debug.hwc.fps_trace.enable=1 \
+	debug.sf.hwc_service_name=hwcomposer \
+	debug.sf.ddms=1 \
+	debug.graphic_log=1 \
+	log.tag.hwcomposer=VERBOSE
+
 # USB HAL
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service
