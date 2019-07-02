@@ -171,8 +171,8 @@ PRODUCT_COPY_FILES += \
     device/asus/mofd-common/media/mfx_omxil_core.conf:system/etc/mfx_omxil_core.conf \
     device/asus/mofd-common/media/video_isv_profile.xml:system/etc/video_isv_profile.xml \
     device/asus/mofd-common/media/wrs_omxil_components.list:system/etc/wrs_omxil_components.list \
-    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml
+    device/asus/mofd-common/media/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml
 
 # Default OMX service to non-Treble
 PRODUCT_PROPERTY_OVERRIDES += \
